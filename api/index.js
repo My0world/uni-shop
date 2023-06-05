@@ -24,6 +24,13 @@ export default {
 		method: "get",
 		url: "/api/public/v1/categories",
 	}),
+	//获取搜索关键字结果
+	getSearchRes: (query) => request({
+		mock: false,
+		method: "get",
+		url: "/api/public/v1/goods/qsearch",
+		query: query
+	}),
 	//获取搜索结果
 	getGoodsList: (query) => request({
 		mock: false,

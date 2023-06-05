@@ -75,12 +75,13 @@
 		}
 		let {
 			data: res
-		} = await uni.$API.getcateList({
+		} = await uni.$API.getSearchRes({
 			query: e.trim()
 		})
 		if (res.meta.status !== 200) return uni.$showMsg()
 		saveSearchHistory(e.trim())
 		searchRes.value = res.message
+		console.log(searchRes.value)
 		//搜索出没有数据时给搜索结果数组添加提示文本
 		if (searchRes.value.length === 0) {
 			searchRes.value.push({
