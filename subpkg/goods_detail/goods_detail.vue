@@ -25,12 +25,12 @@
 				<view class="name">
 					{{goods_info.goods_name}}
 				</view>
-				<view class="sc">
+				<view class="sc" @click="handlerSC">
 					<view>
-						<uni-icons type="star" size="30" color="gray"></uni-icons>
+						<uni-icons v-if="!scstatus" type="star" size="30" color="gray"></uni-icons>
+						<uni-icons v-else type="star-filled" size="30" color="gray"></uni-icons>
 						<text>收藏</text>
 					</view>
-
 				</view>
 			</view>
 			<view class="yf">
@@ -48,6 +48,7 @@
 	import {
 		reactive,
 		ref,
+		computed,
 		watch
 	} from "vue";
 	import {
@@ -57,15 +58,24 @@
 		useCartStore
 	} from '../../store/cart.js'
 	import {
+		useSCStore
+	} from '../../store/sc.js'
+	import {
 		onLoad
 	} from '@dcloudio/uni-app';
 
 	// cart仓库
 	const cart = useCartStore()
 
+	// sc仓库
+	const sc = useSCStore()
+
 	//商品详情
 	let goods_info = ref({})
 	
+	//收藏的状态
+	let scstatus = ref()
+
 	// 左侧按钮组的配置对象
 	let options = reactive([{
 		icon: 'shop',
@@ -74,7 +84,7 @@
 		icon: 'cart',
 		text: '购物车',
 	}])
-	
+
 	// 右侧按钮组的配置对象
 	let buttonGroup = reactive([{
 			text: '加入购物车',
@@ -87,11 +97,12 @@
 			color: '#fff'
 		}
 	])
-	
+
 	//购物车商品总数
 	const {
 		total
 	} = storeToRefs(cart)
+	
 	//监听total
 	watch(total, (newValue) => {
 		options[1].info = newValue
@@ -99,11 +110,20 @@
 		immediate: true
 	})
 
-	// cart仓库的addToCart方法
+	// cart仓库的方法
 	const {
 		addToCart
 	} = cart
+
+
+	// sc仓库的方法
+	const {
+		addSC,
+		isSC
+	} = sc
 	
+
+
 	//获取商品详情
 	const getGoodsDetail = async (goods_id) => {
 		//发送请求
@@ -158,6 +178,28 @@
 				goods_state: true
 			})
 		}
+	}
+	
+	//收藏
+	const handlerSC = () => {
+		// 结构出需要的数据
+		const {
+			goods_id,
+			goods_name,
+			goods_price,
+			goods_small_logo,
+		} = goods_info.value
+		//添加到购物车列表
+		addSC({
+			goods_id,
+			goods_name,
+			goods_price,
+			goods_small_logo,
+			goods_count: 1,
+			goods_state: true
+		})
+		//收藏的状态
+		scstatus.value = isSC(goods_id)
 	}
 
 	onLoad((options) => {

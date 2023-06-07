@@ -84,11 +84,12 @@
 		//修改vuex
 		updateCartCount(item)
 	}
-
+	
+	//删除
 	const swipeHandleDeleteClick = (item) => {
-		//修改vuex
+		//修改
 		deleteCart(item.goods_id)
-
+		
 	}
 </script>
 

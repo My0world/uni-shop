@@ -19,8 +19,8 @@
 					<text>14</text>
 					<text>收藏的店铺</text>
 				</view>
-				<view class="panel-item">
-					<text>18</text>
+				<view class="panel-item" @click="gotoSC">
+					<text>{{total}}</text>
 					<text>关注的商品</text>
 				</view>
 				<view class="panel-item">
@@ -76,6 +76,17 @@
 	import {
 		storeToRefs
 	} from "pinia";
+	import {
+		useSCStore
+	} from '../../store/sc.js'
+
+	//使用sc仓库
+	const sc = useSCStore()
+
+	// sc仓库的方法
+	const {
+		total
+	} = storeToRefs(sc)
 
 	//用户仓库
 	const user = useUserStore()
@@ -90,6 +101,7 @@
 		clearUserInfo
 	} = user
 
+	//退出登录
 	let logout = async () => {
 		const res = await uni.showModal({
 			title: "提示",
@@ -98,7 +110,13 @@
 		if (res.confirm) {
 			clearUserInfo()
 		}
+	}
 
+	//跳转收藏页
+	let gotoSC = () => {
+		uni.navigateTo({
+			url: "/subpkg/goods_sc/goods_sc"
+		})
 	}
 </script>
 

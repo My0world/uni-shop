@@ -13,7 +13,6 @@
 		reactive,
 		ref
 	} from "vue";
-
 	import {
 		onLoad,
 		onReachBottom,
@@ -57,13 +56,14 @@
 			url: "/subpkg/goods_detail/goods_detail?goods_id=" + id
 		})
 	}
-
 	onLoad((options) => {
 		// 获取页面参数
 		queryObj.query = options.query || ""
 		queryObj.cid = options.cid || ""
+	
 		//获取商品列表
 		getGoodsList()
+
 	})
 
 	onReachBottom(() => {
@@ -77,8 +77,8 @@
 	onPullDownRefresh(() => {
 		//重置数据
 		goodsList.value = []
-		total.value  = 0
-		showText.value  = false
+		total.value = 0
+		showText.value = false
 		queryObj.pagenum = 1
 		//重新发送数据
 		getGoodsList(() => {

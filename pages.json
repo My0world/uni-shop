@@ -48,7 +48,16 @@
 				}
 
 			}
-		]
+		    ,{
+                    "path" : "goods_sc/goods_sc",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 	}],
 	"globalStyle": {
 		"backgroundTextStyle": "light",
